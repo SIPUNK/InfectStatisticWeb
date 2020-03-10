@@ -8,15 +8,41 @@ html,body{
 #title{
     text-align: center;
 }
-#list {
-    margin: 0 auto;
+
+#one{
+    color: #ff6a57;
 }
-#list ul{
-    text-align:center;
+#two{
+    color: #ec9217;
 }
-#list ul li{
-    display: inline;
+#three{
+    color: #476da0;
 }
+#four{
+    color: #e83d4f;
+}
+#five{
+    color: #10aeb5;
+}
+#six{
+    color: #4d5054;
+}
+table{
+    font-size: large;
+    margin:0 auto;
+    border:0;
+    cellpadding:0;
+    cellspacing:0;
+    width:330px;
+    border-collapse: collapse;
+    table-layout:fixed;
+}
+.normal{
+    font-size: small;
+}
+#table{
+    margin-top: 50px;
+    text-align:center}
 #main{
     width:600px;
     height:450px;
