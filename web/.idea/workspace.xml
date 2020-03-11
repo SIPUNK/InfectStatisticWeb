@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="84752971-a829-4297-b58b-5ef19cd3c1f4" name="Default Changelist" comment="" />
+    <list default="true" id="84752971-a829-4297-b58b-5ef19cd3c1f4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DetailInformation.css" beforeDir="false" afterPath="$PROJECT_DIR$/DetailInformation.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DetailInformation.html" beforeDir="false" afterPath="$PROJECT_DIR$/DetailInformation.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/map.css" beforeDir="false" afterPath="$PROJECT_DIR$/map.css" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,6 +21,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="XP228-x &lt;60956840+xp228-x@users.noreply.github.com&gt;" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="1YwIk5gn54k7Ko9qnjV1EHhUNM8" />
@@ -53,7 +64,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1583847369400</updated>
-      <workItem from="1583847370599" duration="13496000" />
+      <workItem from="1583847370599" duration="13726000" />
+      <workItem from="1583907093264" duration="12275000" />
     </task>
     <servers />
   </component>
@@ -61,6 +73,10 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="361" y="10" key="CommitChangelistDialog2" timestamp="1583920798284">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="361" y="10" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1583920798284" />
     <state x="819" y="175" key="FileChooserDialogImpl" timestamp="1583847682758">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -73,5 +89,9 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="947" y="337" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.834@0.0.1536.834" timestamp="1583854320765" />
+    <state x="814" y="155" width="672" height="678" key="search.everywhere.popup" timestamp="1583912269964">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="814" y="155" width="672" height="678" key="search.everywhere.popup/0.0.1536.834@0.0.1536.834" timestamp="1583912269964" />
   </component>
 </project>
