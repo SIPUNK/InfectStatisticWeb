@@ -1,0 +1,117 @@
+
+
+html,body{
+    margin: 0 auto;
+    width:100%;
+    height:100%;
+}
+#title{
+    text-align: center;
+}
+
+#one{
+    color: #ff6a57;
+}
+#two{
+    color: #ec9217;
+}
+#three{
+    color: #476da0;
+}
+#four{
+    color: #e83d4f;
+}
+#five{
+    color: #10aeb5;
+}
+#six{
+    color: #4d5054;
+}
+table{clear: both;
+    font-size: large;
+    margin:0 auto;
+    border:0;
+    cellpadding:0;
+    cellspacing:0;
+    width:600px;
+    border-collapse: collapse;
+    table-layout:fixed;
+}
+.normal{
+    font-size: small;
+}
+#table{
+
+    width: 800px;
+    background-color: rgba(233,233,233,0.21);
+    margin: 0 auto;
+    margin-top: 50px;
+    text-align:center}
+#content1{
+    width:600px;
+    height:450px;
+    border:1px solid #ddd;
+}
+.left{float: left;
+font-size: small}
+.right{
+    font-size: small;
+    float: right}
+
+/*默认长宽比0.75*/
+
+html,body,div{
+    font-size: 16px;
+    font-family:"Arial";
+    margin: 0 auto;
+}
+.tab-ui{
+    margin-top: 30px;
+    width: 800px;
+    height: 50px;
+    table-layout: fixed;
+}
+.tab{
+    table-layout: fixed;
+
+    margin: 0 auto;
+}
+.tab-title{
+    border-top-right-radius:8px;
+    float: left;
+    border: solid 1px #e3e6eb;
+    background: #e3e6eb;
+    padding: 5px;
+    font-weight: bolder;
+    color: #4d5054;
+    height: 30px;
+    text-align: center;
+    width: 388px;
+}
+.tab-title:hover{
+    cursor: pointer;
+}
+.tab-title-active{
+    background: #ffffff;
+}
+.top{
+    background: rgba(233, 233, 233, 0.21);
+}
+.content{
+    width: 100%;
+    height: 100%;
+    top: 27px;
+    left: 1px;
+}
+.content a{
+    text-align: center;
+}
+.tab-content{
+
+    padding: 10px;
+    border: solid 1px #c5dbec;
+}
+.row{
+    margin:0 auto;
+    text-align: center;
+}

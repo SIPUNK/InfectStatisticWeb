@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>详细信息</title>
+    <script src="echarts.js"></script>
+    <script src="echarts.min.js"></script>
+    <script src="jquery-3.4.1.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="DetailInformation.css"/>
+</head>
+<body>
+<div class="top">
+    <h2></h2>
+    <div id="table">
+    <a class="left" id="left">更新至</a>
+    <a class="right">数据说明</a>
+    <table>
+        <tr>
+            <td class="row1">现有确诊</td>
+            <td class="row1">累计确诊</td>
+            <td class="row1">累计治愈</td>
+            <td class="row1">累计死亡</td>
+        </tr>
+        <tr>
+            <td class="td" id="td1">55555</td>
+            <td class="td" id="td2">5555</td>
+            <td class="td" id="td3">555</td>
+            <td class="td" id="td4">55</td>
+        </tr>
+        <tr>
+            <td>昨日<a class="td1">555</a></td>
+            <td>昨日<a class="td2">55</a></td>
+            <td>昨日<a class="td3">55</a></td>
+            <td>昨日<a class="td4">5</a></td>
+        </tr>
+    </table>
+    </div>
+</div>
+<div class="content">
+    <div class="tab-content" id="content1" style="height: 500px;width: 800px">
+    </div>
+    <div class="tab-content" id="content2" style="display: none;">
+    </div>
+    <div class="tab-content" id="content3" style="display: none;">
+    </div>
+</div>
+<div class="tab-ui">
+    <div class="tab">
+        <div class="tab-title tab-title-active" id="tab1" onclick="show(3,1)">
+            <a>新增确诊趋势</a>
+        </div>
+        <div class="tab-title" id="tab2" onclick="show(3,2)">
+            <a>累计确诊趋势</a>
+        </div>
+        <div class="tab-title" id="tab3" onclick="show(3,3)">
+            <a>累计治愈/死亡</a>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+
+        /**
+         * format=1表示获取年月日
+         * format=0表示获取年月日时分秒
+         * **/
+        var now = new Date();
+        var year = now.getFullYear();
+        var month = now.getMonth()+1;
+        var date = now.getDate();
+        var day = now.getDay();//得到周几
+        var hour = now.getHours();//得到小时
+        var minu = now.getMinutes();//得到分钟
+        var sec = now.getSeconds();//得到秒
+        _time = year+"-"+month+"-"+date+" "+hour+":"+minu+":"+sec;
+        var left=document.getElementById('left');
+        var a=document.createElement("a");
+        a.text=_time;
+        left.appendChild(a);
+
+
+
+    var myChart = echarts.init(document.getElementById('content1'));
+    option = {
+        xAxis: {
+            type: 'category',
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            type: 'line'
+        }]
+    };
+    myChart.setOption(option);
+    function show(total,active){
+        for(var i=1;i<total+1;i++){
+            $("#tab"+i).removeClass("tab-title-active");
+            $("#content"+i).hide();
+        }
+        $("#tab"+active).addClass("tab-title-active");
+        $("#content"+active).show();
+    }
+</script>
+</body>
+</html>
