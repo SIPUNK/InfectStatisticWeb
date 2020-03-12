@@ -50,6 +50,11 @@
         </tr>
     </table>
 </div>
+<div class="row" style="height: 50px">
+        	日期 <input type="text" name="time"
+            id="time" placeholder="yyyy-MM-dd"> <input
+            type="button" value="查询" onclick="tu()">
+    </div>
 <div class="tab-ui">
     <div class="tab">
         <div class="tab-title tab-title-active" id="tab1" onclick="show(1,2)">
@@ -201,7 +206,6 @@
             $("#content"+active).show();
     }
 </script>
-
 <script type="text/javascript">
     function randomData() {
         return Math.round(Math.random() * 500);
@@ -212,27 +216,14 @@
         time = $("#time").val();
         //alert(time.substring(0, 2));
         $.ajax({
-            url : "info?method=tu",
+            url : "InfoServlet?method=tu",
             async : true,
             type : "POST",
             data : {
                 "time" : time
             },
             success : function(data) {
-                dt = data;
-                for (var i = 0; i < 33; i++) {
-                    var d = {
-                        
-                    };
-                    
-                    d["name"] = dt[i].province;//.substring(0, 2);
-                    d["value"] = dt[i].confirmed_num;
-                    d["yisi_num"] = dt[i].yisi_num;
-                    d["cured_num"] = dt[i].cured_num;
-                    d["dead_num"] = dt[i].dead_num;
-                    mydata1.push(d);
-                }
-                
+            	
             },
             error : function() {
                 alert("请求失败");
