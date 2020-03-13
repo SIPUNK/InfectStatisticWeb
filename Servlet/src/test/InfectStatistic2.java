@@ -41,7 +41,7 @@ public class InfectStatistic2 {
     /**
      * 人数
      */
-    int[][] number = new int[31][4];
+    int[][] number = new int[31][6];
     boolean flag1 = false;
     boolean flag2 = false;
     boolean[] discovery = new boolean[31];
@@ -96,8 +96,9 @@ public class InfectStatistic2 {
                     number[flag][1] -= Integer.parseInt(m.group(2));
                 } else {
                     number[flag][num] += Integer.parseInt(m.group(2));
+                    
                 }
-            }
+            } 
         }
 
     }

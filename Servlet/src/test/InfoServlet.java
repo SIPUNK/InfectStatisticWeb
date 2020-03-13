@@ -20,7 +20,7 @@ import com.google.gson.Gson;
  */
 public class InfoServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    int[][] number = new int[31][4];
+    int[][] number = new int[31][6];
     public InfoServlet() {
         super();
     }
@@ -49,18 +49,15 @@ public class InfoServlet extends HttpServlet {
         String[] args = {"list","-log","D:\\eclipse\\workspace\\Servlet\\log\\","-out","D:\\output.txt","-date"
         		,time};
         number = InfectStatistic2.main(args);
+        for(int i = 0;i < 31;i++)
+        {
+        	number[i][5] = number[i][0] + number[i][2] +number[i][3];
+        }
         Gson gson = new Gson();
         String json = gson.toJson(number);
         System.out.println(json);
-        /*for(int i = 0;i < 31;i++)
-        {
-        	for(int j = 0;j < 4;j++)
-        		System.out.print(number[i][j]);
-        	System.out.println();
-        }*/
         response.getWriter().write(json);
     }
-
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);

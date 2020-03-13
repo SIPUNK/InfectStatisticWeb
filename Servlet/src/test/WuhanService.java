@@ -23,8 +23,8 @@ import java.util.regex.Pattern;
 //@Service("WuhanService")
 public class WuhanService {
     public static void main(String[] args) {
-        getListByCountryTypeService2();
         getStatisticsService();
+        getAreaStat();
     }
  
  
@@ -103,120 +103,6 @@ public class WuhanService {
         return result;
     }
  
-    /**
-     * 获取全球各个国家的确诊、死亡和治愈人数
-     * @return
-     */
-    public static String getListByCountryTypeService2(){
-        String url="https://ncov.dxy.cn/ncovh5/view/pneumonia";
-        //模拟请求
-        HttpPojo httpPojo = new HttpPojo();
-        httpPojo.setHttpHost("ncov.dxy.cn");
-        httpPojo.setHttpAccept("*/*");
-        httpPojo.setHttpConnection("keep-alive");
-        httpPojo.setHttpUserAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36");
-        httpPojo.setHttpReferer("https://ncov.dxy.cn");
-        httpPojo.setHttpOrigin("https://ncov.dxy.cn");
-        Map paramObj = new HashMap();
-        String htmlResult = httpSendGet(url, paramObj, httpPojo); //整个html页面
-        //System.out.println(htmlResult);
- 
-        //正则获取数据
-        //因为html的数据格式看着就像json格式，所以我们正则获取json
-        String reg= "window.getListByCountryTypeService2 = (.*?)\\}(?=catch)";
-        Pattern totalPattern = Pattern.compile(reg);
-        Matcher totalMatcher = totalPattern.matcher(htmlResult);
- 
-        String result="";
-        if (totalMatcher.find()){
-            result = totalMatcher.group(1);
-            System.out.println(result);
-            //各个国家的是一个列表List，如果想保存到数据库中，要遍历结果，下面是demo
-            /*JSONArray array = JSONArray.parseArray(result);
-            JSONObject jsonObject = JSONObject.parseObject(array.getString(0));
-            String provinceName = jsonObject.getString("continents");
-            System.out.println("continents："+provinceName);*/
-        }
- 
-        return result;
-    }
- 
- 
- 
- 
-/**
-     * 获取页面的实时播报
-     * @return
-     */
-    public static String getTimelineService(){
-        String url="https://ncov.dxy.cn/ncovh5/view/pneumonia";
-        //模拟请求
-        HttpPojo httpPojo = new HttpPojo();
-        httpPojo.setHttpHost("ncov.dxy.cn");
-        httpPojo.setHttpAccept("*/*");
-        httpPojo.setHttpConnection("keep-alive");
-        httpPojo.setHttpUserAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36");
-        httpPojo.setHttpReferer("https://ncov.dxy.cn");
-        httpPojo.setHttpOrigin("https://ncov.dxy.cn");
-        Map paramObj = new HashMap();
-        String htmlResult = httpSendGet(url, paramObj, httpPojo); //整个html页面
-        //System.out.println(htmlResult);
- 
-        //正则获取数据
-        //因为html的数据格式看着就像json格式，所以我们正则获取json
-        String reg= "window.getTimelineService = (.*?)\\}(?=catch)";
-        Pattern totalPattern = Pattern.compile(reg);
-        Matcher totalMatcher = totalPattern.matcher(htmlResult);
- 
-        String result="";
-        if (totalMatcher.find()){
-            result = totalMatcher.group(1);
-            System.out.println(result);
-            //是一个列表List，如果想保存到数据库中，要遍历结果，下面是demo
-            /*JSONArray array = JSONArray.parseArray(result);
-            for (int i = 0; i < array.size(); i++) {
-                JSONObject jsonObject = JSONObject.parseObject(array.getString(i));
-                String title = jsonObject.getString("title");
-                System.out.println("title："+title);
-            }*/
- 
-        }
- 
-        return result;
-    }
- 
- 
-    /**
-     * 获取页面实时播报的所有历史数据
-     * @return
-     */
-    public static String getAllTimelineService(){
-        String url="https://file1.dxycdn.com/2020/0130/492/3393874921745912795-115.json?"+Math.round(Math.random()*100000000);
-        //模拟请求
-        HttpPojo httpPojo = new HttpPojo();
-        httpPojo.setHttpHost("ncov.dxy.cn");
-        httpPojo.setHttpAccept("*/*");
-        httpPojo.setHttpConnection("keep-alive");
-        httpPojo.setHttpUserAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36");
-        httpPojo.setHttpReferer("https://ncov.dxy.cn/ncovh5/view/pneumonia_timeline?from=dxy&link=&share=&source=");
-        httpPojo.setHttpOrigin("https://ncov.dxy.cn");
-        Map paramObj = new HashMap();
-        String htmlResult = httpSendGet(url, paramObj, httpPojo); //整个html页面
-        System.out.println(htmlResult);
- 
-        //是一个列表List，如果想保存到数据库中，要遍历结果，下面是demo
-        /*JSONObject resultJo = JSONObject.parseObject(htmlResult);
-        String dataStr = resultJo.getString("data");
-        JSONArray array = JSONArray.parseArray(dataStr);
-        for (int i = 0; i < 5; i++) {
-            JSONObject jsonObject = JSONObject.parseObject(array.getString(i));
-            String title = jsonObject.getString("title");
-            System.out.println("title："+title);
-        }*/
- 
- 
-        return htmlResult;
-    }
  
  
  
