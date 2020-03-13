@@ -212,6 +212,10 @@
     }
     var dt;
     var mydata1 = new Array(0);
+    var province = new Array("安徽", "北京", "重庆", "福建", "甘肃", "广东", "广西",
+            "贵州", "海南", "河北", "河南", "黑龙江", "湖北", "湖南",
+            "吉林", "江苏", "江西", "辽宁", "内蒙古", "宁夏", "青海", "山东", "山西",
+            "陕西", "上海", "四川", "天津", "西藏", "新疆", "云南", "浙江");
     function tu() {
         time = $("#time").val();
         //alert(time.substring(0, 2));
@@ -223,7 +227,62 @@
                 "time" : time
             },
             success : function(data) {
-            	
+            	alert(data);
+            	dt = data;
+                for (var i = 0; i < 31; i++) {
+                    var d = {
+                        
+                    };
+                    
+                    d["name"] = province[i];
+                    d["value"] = dt[i][0];
+                    d["yisi_num"] = dt[i][1];
+                    d["cured_num"] = dt[i][2];
+                    d["dead_num"] = dt[i][3];
+                    mydata1.push(d);
+                }
+                
+                var optionMap = {
+                        
+                        tooltip : {
+                            formatter : function(params) {
+                                return params.name + '<br/>' + '确诊人数 : '
+                                        + params.value + '<br/>' + '死亡人数 : '
+                                        + params['data'].dead_num + '<br/>' + '治愈人数 : '
+                                        + params['data'].cured_num + '<br/>'+ '疑似患者人数 : '
+                                        + params['data'].yisi_num;
+                            }//数据格式化
+                        },
+
+                        //左侧小导航图标
+                        visualMap : {
+                        	min: 0,
+                            max: 10000,
+                            left: 'left',
+                            top: 'bottom',
+                            text: ['高','低'],//取值范围的文字
+                            inRange: {
+                                color: ['#fff5ee', '#dd0515']//取值范围的颜色
+                            },
+                            show:true//图注
+                        },
+
+                        //配置属性
+                        series : [ {
+                            type : 'map',
+                            mapType : 'china',
+                            label : {
+                                show : true
+                            },
+                            data : mydata1,
+
+                        } ]
+                    };
+                //初始化echarts实例
+                var myChart = echarts.init(document.getElementById('content1'));
+
+                //使用制定的配置项和数据显示图表
+                myChart.setOption(optionMap);
             },
             error : function() {
                 alert("请求失败");

@@ -20,6 +20,7 @@ import com.google.gson.Gson;
  */
 public class InfoServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    int[][] number = new int[31][4];
     public InfoServlet() {
         super();
     }
@@ -31,7 +32,7 @@ public class InfoServlet extends HttpServlet {
         if(method.equals("tu")) {
             try {
                 tu(request, response);
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -41,15 +42,22 @@ public class InfoServlet extends HttpServlet {
     /**
      * @param request
      * @param response
+     * @throws Exception 
      */
-    private void tu(HttpServletRequest request, HttpServletResponse response)throws SQLException, ServletException, IOException {
+    private void tu(HttpServletRequest request, HttpServletResponse response)throws Exception {
         String time = request.getParameter("time");
         String[] args = {"list","-log","D:\\eclipse\\workspace\\Servlet\\log\\","-out","D:\\output.txt","-date"
         		,time};
-        InfectStatistic.main(args);
+        number = InfectStatistic2.main(args);
         Gson gson = new Gson();
-        String json = gson.toJson(time);
+        String json = gson.toJson(number);
         System.out.println(json);
+        /*for(int i = 0;i < 31;i++)
+        {
+        	for(int j = 0;j < 4;j++)
+        		System.out.print(number[i][j]);
+        	System.out.println();
+        }*/
         response.getWriter().write(json);
     }
 
