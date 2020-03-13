@@ -18,8 +18,7 @@ import java.util.regex.Pattern;
  
  
 /**
- * Created by yjl on 2020-02-01.
- * 公众号：zygxsq 内有整理的程序员面试大全
+ * 
  */
 //@Service("WuhanService")
 public class WuhanService {
