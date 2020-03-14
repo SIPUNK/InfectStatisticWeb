@@ -112,6 +112,9 @@ html,body,div{
     border: solid 1px #c5dbec;
 }
 .row{
-    margin:0 auto;
+    margin-top: 30px;
     text-align: center;
+}
+table td{
+	font-size: 30px;
 }

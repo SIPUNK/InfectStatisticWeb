@@ -43,6 +43,20 @@ public class InfoServlet extends HttpServlet {
                 e.printStackTrace();
             }
         }
+        else if(method.equals("crawl0")) {
+        	try {
+                crawl0(request, response);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else if(method.equals("crawl2")) {
+        	try {
+                crawl2(request, response);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         //response.getWriter().append("Served at: ").append(request.getContextPath());
     }
 
@@ -75,7 +89,7 @@ public class InfoServlet extends HttpServlet {
     }
 
     private void crawl0(HttpServletRequest request, HttpServletResponse response)throws Exception{
-        String list = WuhanService.getgetStatisticsService();
+        String[] list = WuhanService.getStatisticsService();
         Gson gson = new Gson();
         String json = gson.toJson(list);
         System.out.println(json);

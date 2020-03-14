@@ -1,8 +1,8 @@
 package test;
 
 
-//import com.alibaba.fastjson.JSONArray;
-//import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
  
 //import org.springframework.stereotype.Service;
  
@@ -21,19 +21,43 @@ import java.util.regex.Pattern;
  * 
  */
 //@Service("WuhanService")
+
 public class WuhanService {
     public static void main(String[] args) {
+    	getAreaStat();
         getStatisticsService();
-        getAreaStat();
         getAllHistoryDataService();
     }
- 
- 
+    /*
+     * 
+     */
+    public static String getTimeFormat(String timeStr) {
+        long time=Long.parseLong(timeStr);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        String monthStr = addZero(month);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        String dayStr = addZero(day);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);//24小时制
+        String hourStr = addZero(hour);
+        int minute = calendar.get(Calendar.MINUTE);
+        String minuteStr = addZero(minute);
+        int second = calendar.get(Calendar.SECOND);
+        String secondStr =addZero(second);
+        return(year + "-" + monthStr  + "-" + dayStr + " "
+                + hourStr + ":" + minuteStr + ":" + secondStr);
+    }
+    private static String addZero(int param) {
+        String paramStr= param<10 ? "0"+param : "" + param ;
+        return paramStr;
+    }
     /**
      * 获取丁香医生的总共确诊病例、疑似病例、治愈人数、死亡人数等数据
      * @return
      */
-    public static String getStatisticsService(){
+    public static String[] getStatisticsService(){
         String url="https://ncov.dxy.cn/ncovh5/view/pneumonia";
         //模拟请求
         HttpPojo httpPojo = new HttpPojo();
@@ -54,15 +78,20 @@ public class WuhanService {
         Matcher totalMatcher = totalPattern.matcher(htmlResult);
  
         String result="";
+        String[] result1 = new String[5];
         if (totalMatcher.find()){
             result = totalMatcher.group(1);
             System.out.println(result);
-            //JSONObject jsonObject = JSONObject.parseObject(result);
-            //String modifyTime = jsonObject.getString("modifyTime");
-            //System.out.println("modifyTime："+modifyTime);
+            JSONObject jsonObject = JSONObject.parseObject(result);
+            result1[0] = jsonObject.getString("confirmedCount");
+            result1[1] = jsonObject.getString("suspectedCount");
+            result1[2] = jsonObject.getString("curedCount");
+            result1[3] = jsonObject.getString("deadCount");
+            result1[4] = getTimeFormat(jsonObject.getString("modifyTime"));
+            //System.out.println("confirmedCount："+confirmedCount);
         }
- 
-        return result;
+        System.out.println(result1);
+        return result1;
     }
  
  

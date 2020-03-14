@@ -14,5 +14,6 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="D:/eclipse/java/lib/ext/gson-2.8.6.jar"/>
+	<classpathentry kind="lib" path="D:/eclipse/java/lib/ext/fastjson-1.2.66.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
