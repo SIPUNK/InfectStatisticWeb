@@ -95,9 +95,7 @@
         {name: '澳门', value: 10}
     ]
     var myChart = echarts.init(document.getElementById('content2'));
-    function randomValue() {
-        return Math.round(Math.random()*1000);
-    }
+
 
 
     option = {
@@ -113,7 +111,7 @@
             top: 'bottom',
             text: ['高','低'],//取值范围的文字
             inRange: {
-                color: ['#fff5ee', '#dd0515']//取值范围的颜色
+                color: ['#fff5ee', '#fd0000']//取值范围的颜色
             },
             show:true//图注
         },
