@@ -73,6 +73,15 @@ public class InfoServlet extends HttpServlet {
         System.out.println(json);
         response.getWriter().write(json);
     }
+
+    private void crawl0(HttpServletRequest request, HttpServletResponse response)throws Exception{
+        String list = WuhanService.getgetStatisticsService();
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        System.out.println(json);
+        response.getWriter().write(json);
+    }
+
     private void crawl2(HttpServletRequest request, HttpServletResponse response)throws Exception{
     	String list = WuhanService.getAllHistoryDataService();
     	Gson gson = new Gson();

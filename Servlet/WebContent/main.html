@@ -19,39 +19,22 @@
     <a class="right">数据说明</a>
     <table>
         <tr >
-            <td >现有确诊</td>
-            <td >现有治愈</td>
-            <td >现有死亡</td>
+            <td >确诊病例</td>
+            <td >疑似病例</td>
+            <td>治愈病例</td>
+            <td >死亡病例</td>
         </tr>
         <tr >
-            <td id="one">5555</td>
-            <td id="two">555</td>
-            <td id="three">5</td>
+            <td id="one"></td>
+            <td id="two"></td>
+            <td id="three"></td>
+            <td id="four"></td>
         </tr>
-        <tr >
-            <td class="normal">现有</td>
-            <td class="normal">现有</td>
-            <td class="normal">现有</td>
-        </tr>
-        <tr >
-            <td >累计确诊</td>
-            <td >累计治愈</td>
-            <td >累计死亡</td>
-        </tr>
-        <tr >
-            <td id="four">55555</td>
-            <td id="five">555</td>
-            <td id="six">255</td>
-        </tr>
-        <tr >
-            <td class="normal">现有</td>
-            <td class="normal">现有</td>
-            <td class="normal">现有</td>
-        </tr>
+
     </table>
 </div>
 <div class="row" style="height: 50px">
-        	日期 <input type="text" name="time"
+        	日期 <input type="date" name="time"
             id="time" placeholder="yyyy-MM-dd"> <input
             type="button" value="查询" onclick="tu()">
     </div>
@@ -69,12 +52,13 @@
 
     <div class="tab-content" id="content1" style="height: 500px;width: 780px">
     </div>
-    <div class="tab-content" id="content2" style="display: none;">
+    <div class="tab-content" id="content2" style="height: 500px;width: 780px;display: none;">
     </div>
 </div>
 
 
 <script type="text/javascript">
+
     var now = new Date();
     var year = now.getFullYear();
     var month = now.getMonth()+1;
@@ -84,10 +68,7 @@
     var minu = now.getMinutes();//得到分钟
     var sec = now.getSeconds();//得到秒
     _time = year+"-"+month+"-"+date+" "+hour+":"+minu+":"+sec;
-    var left=document.getElementById('left');
-    var a=document.createElement("a");
-    a.text=_time;
-    left.appendChild(a);
+
     var dataList=[
         {name:"南海诸岛",value:0},
         {name: '北京', value: randomValue()},
@@ -125,7 +106,7 @@
         {name: '香港', value: randomValue()},
         {name: '澳门', value: randomValue()}
     ]
-    var myChart = echarts.init(document.getElementById('content1'));
+    var myChart = echarts.init(document.getElementById('content2'));
     function randomValue() {
         return Math.round(Math.random()*1000);
     }
@@ -207,16 +188,9 @@
     }
 </script>
 <script type="text/javascript">
-    function randomData() {
-        return Math.round(Math.random() * 500);
-    }
+
     var dt;
     var mydata1 = new Array(0);
-    
-    var province = new Array("安徽", "北京", "重庆", "福建", "甘肃", "广东", "广西",
-            "贵州", "海南", "河北", "河南", "黑龙江", "湖北", "湖南",
-            "吉林", "江苏", "江西", "辽宁", "内蒙古", "宁夏", "青海", "山东", "山西",
-            "陕西", "上海", "四川", "天津", "西藏", "新疆", "云南", "浙江");
     function tu() {
         time = $("#time").val();
         //alert(time.substring(0, 2));
@@ -258,7 +232,6 @@
                                         + params['data'].yisi_num;
                             }//数据格式化
                         },
-
                         //左侧小导航图标
                         visualMap : {
                         	min: 0,
@@ -295,6 +268,44 @@
             },
             dataType : "json"
         });
+    }
+    window.onload=function historydata () {
+        $.ajax({
+            url: "InfoServlet?method=crawl0",
+            async: true,
+            type: "POST",
+            data: {
+                "time": time
+            },
+            success: function (data) {
+                var json = eval("(" + data + ")");//data为接收的后台返回的数据；
+                alert(json.length);
+               // var id1 = json[0].provinceName;
+                //alert(id1);
+                dt = data;
+                var c=document.createElement("a");
+                c.text=json.curedCount;
+                var three=document.getElementById("one");
+                three.appendChild(c);
+                var b=document.createElement("a");
+                b.text=json.suspectedCount;
+                var two=document.getElementById("two");
+                two.appendChild(b);
+                var d=document.createElement("a");
+                d.text= json.deadCount;
+                var four=document.getElementById("four");
+                four.appendChild(d)
+                var date=document.createElement("a");
+                date.text=json.modifyTime;
+                var left=document.getElementById("left");
+                left.appendChild(date)
+                var a=document.createElement("a");
+                a.text=json.confirmedCount;;
+                var one=document.getElementById("one");
+                one.appendChild(a);
+
+            }
+        })
     }
 </script>
 </body>
