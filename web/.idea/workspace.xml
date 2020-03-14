@@ -48,7 +48,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/-2-master" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Servlet/WebContent" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
@@ -81,6 +81,8 @@
       <workItem from="1584009169695" duration="1167000" />
       <workItem from="1584010372426" duration="470000" />
       <workItem from="1584010874584" duration="3230000" />
+      <workItem from="1584165789267" duration="579000" />
+      <workItem from="1584166369522" duration="177000" />
     </task>
     <task id="LOCAL-00001" summary="完成基础前端部分的构建">
       <created>1583920814486</created>
@@ -112,10 +114,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="442" y="54" key="DBNavigator.ProjectSettingsDialog/0.0.1536.834@0.0.1536.834" timestamp="1584011906320" />
-    <state x="819" y="175" key="FileChooserDialogImpl" timestamp="1584011895645">
+    <state x="819" y="175" key="FileChooserDialogImpl" timestamp="1584166544041">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="819" y="175" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1584011895645" />
+    <state x="819" y="175" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1584166544041" />
     <state x="540" y="62" key="SettingsEditor" timestamp="1584010343435">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
