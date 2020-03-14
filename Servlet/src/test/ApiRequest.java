@@ -25,10 +25,12 @@ public class ApiRequest {
         params.put("provinceName",info);
         //调用httpRequest方法，这个方法主要用于请求地址，并加上请求参数
         String string = httpRequest(requestUrl,params);
-        System.out.println(string);
+       // System.out.println(string);
         //处理返回的JSON数据并返回
+
         JSONObject pageBean = JSONObject.parseObject(string);
-    	return pageBean.getString("date");
+       // System.out.println(pageBean);
+    	return pageBean.getString("data");
     }
     
     private static String httpRequest(String requestUrl,Map params) {  
