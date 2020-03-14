@@ -2,6 +2,7 @@
 <module type="JAVA_MODULE" version="4">
   <component name="EclipseModuleManager">
     <libelement value="file://D:/eclipse/java/lib/ext/gson-2.8.6.jar" />
+    <libelement value="file://D:/eclipse/java/lib/ext/fastjson-1.2.66.jar" />
     <conelement value="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v9.0" />
     <conelement value="org.eclipse.jst.j2ee.internal.web.container" />
     <conelement value="org.eclipse.jst.j2ee.internal.module.container" />
@@ -29,6 +30,14 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
+    <orderEntry type="module-library">
+      <library name="fastjson-1.2.66.jar">
+        <CLASSES>
+          <root url="file://D:/eclipse/java/lib/ext/fastjson-1.2.66.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
