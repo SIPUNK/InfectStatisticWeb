@@ -1,10 +1,10 @@
 package test;
 
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+//import com.alibaba.fastjson.JSONArray;
+//import com.alibaba.fastjson.JSONObject;
  
-import org.springframework.stereotype.Service;
+//import org.springframework.stereotype.Service;
  
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,6 +25,7 @@ public class WuhanService {
     public static void main(String[] args) {
         getStatisticsService();
         getAreaStat();
+        getAllHistoryDataService();
     }
  
  
@@ -103,7 +104,37 @@ public class WuhanService {
         return result;
     }
  
+    /**
+     * 获取历史确诊、疑似、治愈和死亡人数
+     * @return
+     */
+    public static String getAllHistoryDataService(){
+        String url="https://file1.dxycdn.com/2020/0223/618/3398299751673487511-135.json?"+Math.round(Math.random()*100000000);
+        //模拟请求
+        HttpPojo httpPojo = new HttpPojo();
+        httpPojo.setHttpHost("ncov.dxy.cn");
+        httpPojo.setHttpAccept("*/*");
+        httpPojo.setHttpConnection("keep-alive");
+        httpPojo.setHttpUserAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36");
+        httpPojo.setHttpReferer("https://ncov.dxy.cn/ncovh5/view/pneumonia");
+        httpPojo.setHttpOrigin("https://ncov.dxy.cn");
+        Map paramObj = new HashMap();
+        String htmlResult = httpSendGet(url, paramObj, httpPojo); //整个html页面
+        System.out.println(htmlResult);
  
+        //是一个列表List，如果想保存到数据库中，要遍历结果，下面是demo
+        /*JSONObject resultJo = JSONObject.parseObject(htmlResult);
+        String dataStr = resultJo.getString("data");
+        JSONArray array = JSONArray.parseArray(dataStr);
+        for (int i = 0; i < 5; i++) {
+            JSONObject jsonObject = JSONObject.parseObject(array.getString(i));
+            String confirmedCount = jsonObject.getString("confirmedCount");
+            System.out.println("confirmedCount："+confirmedCount);
+        }*/
+ 
+ 
+        return htmlResult;
+    }
  
  
     /**
@@ -162,6 +193,8 @@ public class WuhanService {
         return result;
     }
  
+    
+    
  
     /**
      * 解析map

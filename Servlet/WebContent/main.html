@@ -212,6 +212,7 @@
     }
     var dt;
     var mydata1 = new Array(0);
+    
     var province = new Array("安徽", "北京", "重庆", "福建", "甘肃", "广东", "广西",
             "贵州", "海南", "河北", "河南", "黑龙江", "湖北", "湖南",
             "吉林", "江苏", "江西", "辽宁", "内蒙古", "宁夏", "青海", "山东", "山西",
@@ -220,25 +221,29 @@
         time = $("#time").val();
         //alert(time.substring(0, 2));
         $.ajax({
-            url : "InfoServlet?method=tu",
+            url : "InfoServlet?method=crawl",
             async : true,
             type : "POST",
             data : {
                 "time" : time
             },
             success : function(data) {
-            	alert(data);
+            	var json = eval("(" + data + ")");//data为接收的后台返回的数据；
+            	alert(json.length);
+            	var id1 = json[0].provinceName;
+            	//alert(id1);
             	dt = data;
-                for (var i = 0; i < 31; i++) {
+            	mydata1 = [];
+                for (var i = 0; i < json.length; i++) {
                     var d = {
                         
                     };
                     
-                    d["name"] = province[i];
-                    d["value"] = dt[i][0];
-                    d["yisi_num"] = dt[i][1];
-                    d["cured_num"] = dt[i][2];
-                    d["dead_num"] = dt[i][3];
+                    d["name"] = json[i].provinceShortName;
+                    d["value"] = json[i].currentConfirmedCount;
+                    d["yisi_num"] = json[i].suspectedCount;
+                    d["cured_num"] = json[i].curedCount;
+                    d["dead_num"] = json[i].deadCount;
                     mydata1.push(d);
                 }
                 
@@ -246,8 +251,8 @@
                         
                         tooltip : {
                             formatter : function(params) {
-                                return params.name + '<br/>' + '确诊人数 : '
-                                        + params.value + '<br/>' + '死亡人数 : '
+                                return params['data'].name + '<br/>' + '确诊人数 : '
+                                        + params['data'].value + '<br/>' + '死亡人数 : '
                                         + params['data'].dead_num + '<br/>' + '治愈人数 : '
                                         + params['data'].cured_num + '<br/>'+ '疑似患者人数 : '
                                         + params['data'].yisi_num;
@@ -257,7 +262,7 @@
                         //左侧小导航图标
                         visualMap : {
                         	min: 0,
-                            max: 1000,
+                            max: 300,
                             left: 'left',
                             top: 'bottom',
                             text: ['高','低'],//取值范围的文字
@@ -282,6 +287,7 @@
                 var myChart = echarts.init(document.getElementById('content1'));
 
                 //使用制定的配置项和数据显示图表
+                
                 myChart.setOption(optionMap);
             },
             error : function() {
@@ -291,6 +297,5 @@
         });
     }
 </script>
-
 </body>
 </html>
