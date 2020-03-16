@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <script src="echarts.js"></script>
+    <script src="china.js"></script>
+    <script src="jquery-3.4.1.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="map.css"/>
+</head>
+<body>
+<div id="title">
+    <h1>中国新型冠性肺炎疫情地图</h1>
+</div>
+
+<div id="table"   >
+    <a class="left" id="left">更新至</a>
+    <a class="right">数据说明</a>
+    <table>
+        <tr >
+            <td >累计确诊</td>
+            <td >疑似病例</td>
+            <td >治愈病例</td>
+            <td >死亡病例</td>
+        </tr>
+        <tr >
+            <td id="one"></td>
+            <td id="two"></td>
+            <td id="three"></td>
+            <td id="four"></td>
+        </tr>
+    </table>
+</div>
+<div class="row" style="height: 50px">
+        	日期 <input type="date" name="time"
+            id="time" placeholder="yyyy-MM-dd"> <input
+            type="button" value="查询" onclick="tu()">
+    </div>
+<div class="tab-ui">
+    <div class="tab">
+        <div class="tab-title tab-title-active" id="tab1" onclick="show(1,2)">
+            <a>新增确诊趋势</a>
+        </div>
+        <div class="tab-title" id="tab2" onclick="show(2,1)">
+            <a>累计确诊趋势</a>
+        </div>
+    </div>
+</div>
+<div class="content">
+
+    <div class="tab-content" id="content1" style="height: 500px;width: 780px">
+    </div>
+    <div class="tab-content" id="content2" style="display: none;height: 500px;width: 780px">
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var dataList=[
+        {name:"南海诸岛",value:0},
+        {name: '北京', value: 437},
+        {name: '天津', value: 136},
+        {name: '上海', value: 352},
+        {name: '重庆', value: 576},
+        {name: '河北', value: 310},
+        {name: '河南', value: 1273},
+        {name: '云南', value: 170},
+        {name: '辽宁', value: 125},
+        {name: '黑龙江', value: 482},
+        {name: '湖南', value: 1018},
+        {name: '安徽', value: 990},
+        {name: '山东', value: 760},
+        {name: '新疆', value: 76},
+        {name: '江苏', value: 630},
+        {name: '浙江', value: 1227},
+        {name: '江西', value: 935},
+        {name: '湖北', value: 67790},
+        {name: '广西', value: 252},
+        {name: '甘肃', value: 129},
+        {name: '山西', value: 133},
+        {name: '内蒙古', value: 75},
+        {name: '陕西', value: 245},
+        {name: '吉林', value: 93},
+        {name: '福建', value: 296},
+        {name: '贵州', value: 146},
+        {name: '广东', value: 1356},
+        {name: '青海', value: 18},
+        {name: '西藏', value: 1},
+        {name: '四川', value: 539},
+        {name: '宁夏', value: 75},
+        {name: '海南', value: 168},
+        {name: '台湾', value: 53},
+        {name: '香港', value: 137},
+        {name: '澳门', value: 10}
+    ]
+    var myChart = echarts.init(document.getElementById('content2'));
+    function randomValue() {
+        return Math.round(Math.random()*1000);
+    }
+
+
+    option = {
+        tooltip: {
+            formatter:function(params,ticket, callback){
+                return params.seriesName+'<br />'+params.name+'：'+params.value
+            }//数据格式化
+        },
+        visualMap: {
+            min: 0,
+            max: 1500,
+            left: 'left',
+            top: 'bottom',
+            text: ['高','低'],//取值范围的文字
+            inRange: {
+                color: ['#fff5ee', '#dd0515']//取值范围的颜色
+            },
+            show:true//图注
+        },
+        geo: {
+            map: 'china',
+            roam: false,//不开启缩放和平移
+            zoom:1.23,//视角缩放比例
+            label: {
+                normal: {
+                    show: true,
+                    fontSize:'10',
+                    color: 'rgba(0,0,0,0.7)'
+                }
+            },
+            itemStyle: {
+                normal:{
+                    borderColor: 'rgba(0, 0, 0, 0.2)'
+                },
+                emphasis:{
+                    areaColor: '#F3B329',//鼠标选择区域颜色
+                    shadowOffsetX: 0,
+                    shadowOffsetY: 0,
+                    shadowBlur: 20,
+                    borderWidth: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+        },
+        series : [
+            {
+                name: '确诊人数',
+                type: 'map',
+                geoIndex: 0,
+                data:dataList
+            }
+        ]
+    };
+    myChart.setOption(option);
+    myChart.on('click', function (params) {
+    	window.location.href="/Servlet/DetailInformation.html?name="+params.name+"";
+    });
+
+    /*  setTimeout(function () {
+          myChart.setOption({
+              series : [
+                  {
+                      name: '信息量',
+                      type: 'map',
+                      geoIndex: 0,
+                      data:dataList
+                  }
+              ]
+          });
+      },1000)*/
+    function show(active,hov){
+            $("#tab"+hov).removeClass("tab-title-active");
+            $("#content"+hov).hide();
+            $("#tab"+active).addClass("tab-title-active");
+            $("#content"+active).show();
+    }
+</script>
+
+<script type="text/javascript">
+window.onload=function () {
+		var ctext;
+        $.ajax({
+            url: "InfoServlet?method=crawl0",
+            async: true,
+            type: "POST",
+            data: {
+                
+            },
+            success: function (data) {
+                var json = JSON.parse(data);//data为接收的后台返回的数据
+                
+                alert(json);
+               // var id1 = json[0].provinceName;
+                //alert(id1);
+                var c=document.createElement("a");
+                c.text=json[2];
+                var three=document.getElementById("three");
+                three.appendChild(c);
+                var b=document.createElement("a");
+                b.text=json[1];
+                var two=document.getElementById("two");
+                two.appendChild(b);
+                var d=document.createElement("a");
+                d.text= json[3];
+                var four=document.getElementById("four");
+                four.appendChild(d)
+                var date=document.createElement("a");
+                date.text=json[4];
+                var left=document.getElementById("left");
+                left.appendChild(date)
+                var a=document.createElement("a");
+                a.text=json[0];
+                var one=document.getElementById("one");
+                one.appendChild(a);
+
+            },
+            error : function() {
+            	alert("请求失败");
+        	},
+        })
+        
+        
+        
+        time = $("#time").val();
+        //alert(time.substring(0, 2));
+        $.ajax({
+            url : "InfoServlet?method=crawl",
+            async : true,
+            type : "POST",
+            data : {
+                "time" : time
+            },
+            success : function(data) {
+            	var json = eval("(" + data + ")");//data为接收的后台返回的数据；
+            	//alert(json.length);
+            	var id1 = json[0].provinceName;
+            	//alert(id1);
+            	dt = data;
+            	mydata1 = [];
+                for (var i = 0; i < json.length; i++) {
+                    var d = {
+                        
+                    };
+                    
+                    d["name"] = json[i].provinceShortName;
+                    d["value"] = json[i].currentConfirmedCount;
+                    d["yisi_num"] = json[i].suspectedCount;
+                    d["cured_num"] = json[i].curedCount;
+                    d["dead_num"] = json[i].deadCount;
+                    mydata1.push(d);
+                    console.log(json[i]);
+                }
+                
+                var optionMap = {
+                        
+                        tooltip : {
+                            formatter : function(params) {
+                                return params['data'].name + '<br/>' + '确诊人数 : '
+                                        + params['data'].value + '<br/>' + '死亡人数 : '
+                                        + params['data'].dead_num + '<br/>' + '治愈人数 : '
+                                        + params['data'].cured_num + '<br/>'+ '疑似患者人数 : '
+                                        + params['data'].yisi_num;
+                            }//数据格式化
+                        },
+
+                        //左侧小导航图标
+                        visualMap : {
+                        	min: 0,
+                            max: 300,
+                            left: 'left',
+                            top: 'bottom',
+                            text: ['高','低'],//取值范围的文字
+                            inRange: {
+                                color: ['#fff5ee', '#dd0515']//取值范围的颜色
+                            },
+                            show:true//图注
+                        },
+                        geo: {
+                            map: 'china',
+                            roam: false,//不开启缩放和平移
+                            zoom:1.23,//视角缩放比例
+                            label: {
+                                normal: {
+                                    show: true,
+                                    fontSize:'10',
+                                    color: 'rgba(0,0,0,0.7)'
+                                }
+                            },
+                            itemStyle: {
+                                normal:{
+                                    borderColor: 'rgba(0, 0, 0, 0.2)'
+                                },
+                                emphasis:{
+                                    areaColor: '#F3B329',//鼠标选择区域颜色
+                                    shadowOffsetX: 0,
+                                    shadowOffsetY: 0,
+                                    shadowBlur: 20,
+                                    borderWidth: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        },
+                        //配置属性
+                        series : [
+            				{
+                				name: '确诊人数',
+                				type: 'map',
+                				geoIndex: 0,
+                				data:mydata1
+            				}
+        				]
+                    };
+                //初始化echarts实例
+                var myChart = echarts.init(document.getElementById('content1'));
+
+                //使用制定的配置项和数据显示图表
+                
+                myChart.setOption(optionMap);
+                myChart.on('click', function (params) {
+                	window.location.href="/Servlet/DetailInformation.html?name="+params.name+"";
+                });
+            },
+            error : function() {
+                alert("请求失败");
+            },
+            dataType : "json"
+        });
+    }
+</script>
+</body>
+</html>
