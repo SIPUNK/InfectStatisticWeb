@@ -25,16 +25,10 @@
             <td class="row1">累计死亡</td>
         </tr>
         <tr>
-            <td class="td" id="td1">55555</td>
-            <td class="td" id="td2">5555</td>
-            <td class="td" id="td3">555</td>
-            <td class="td" id="td4">55</td>
-        </tr>
-        <tr>
-            <td>昨日<a class="td1">555</a></td>
-            <td>昨日<a class="td2">55</a></td>
-            <td>昨日<a class="td3">55</a></td>
-            <td>昨日<a class="td4">5</a></td>
+            <td class="td" id="td1"></td>
+            <td class="td" id="td2"></td>
+            <td class="td" id="td3"></td>
+            <td class="td" id="td4"></td>
         </tr>
     </table>
     </div>
@@ -81,10 +75,55 @@ window.onload=function(){
     var two=document.getElementById("title");
     two.appendChild(title);
     
+    var mydata1 = new Array(0);
+    $.ajax({
+        url : "InfoServlet?method=crawl",
+        async : true,
+        type : "POST",
+        data : {
+            
+        },
+        success : function(data) {
+        	var json = eval("(" + data + ")");//data为接收的后台返回的数据；
+        	for (var i = 0; i < json.length; i++) {
+                if(json[i].provinceShortName == title.text){
+                	var d = {
+                            
+                    };
+                    
+                    d["currentConfirmedCount"] = json[i].currentConfirmedCount;
+                    d["confirmedCount"] = json[i].confirmedCount;
+                    d["curedCount"] = json[i].curedCount;
+                    d["deadCount"] = json[i].deadCount;
+                    mydata1.push(d);
+                }
+            }
+        	var b=document.createElement("a");
+            b.text=mydata1[0].currentConfirmedCount;
+            var td1=document.getElementById("td1");
+            td1.appendChild(b);
+            var b=document.createElement("a");
+            b.text=mydata1[0].confirmedCount;
+            var td2=document.getElementById("td2");
+            td2.appendChild(b);
+            var b=document.createElement("a");
+            b.text=mydata1[0].curedCount;
+            var td3=document.getElementById("td3");
+            td3.appendChild(b);
+            var b=document.createElement("a");
+            b.text=mydata1[0].deadCount;
+            var td4=document.getElementById("td4");
+            td4.appendChild(b);
+        },
+        error : function() {
+            alert("请求失败");
+        },
+        dataType : "json"
+    });
     
 	var mydata2 = new Array(0);
     $.ajax({
-    	url : "InfoServlet?method=crawl2",
+    	url : "InfoServlet?method=d&name="+title.text+"",
     	async : true,
     	type : "POST",
     	data : {
@@ -92,23 +131,38 @@ window.onload=function(){
         },
     	success : function(data){
     		var json = eval("(" + data + ")");//data为接收的后台返回的数据；
-        	//alert(json.length);
         	mydata2 = [];
             for (var i = 0; i < json.length; i++) {
                 console.log(json[i]);
             }
-
+            
+            for (var i = json.length - 7; i < json.length; i++) {
+                var d = {
+                    
+                };
+                
+                d["date"] = json[i].date;
+                d["confirm_add"] = json[i].confirm_add;
+                d["confirm"] = json[i].confirm;
+                d["heal"] = json[i].heal;
+                d["dead"] = json[i].dead;
+                mydata2.push(d);
+            }
+	
             var myChart1 = echarts.init(document.getElementById('content1'));
             option = {
                 xAxis: {
                     type: 'category',
-                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                    data: [mydata2[0].date, mydata2[1].date, mydata2[2].date
+                    	, mydata2[3].date, mydata2[4].date, mydata2[5].date, mydata2[6].date]
                 },
                 yAxis: {
                     type: 'value'
                 },
                 series: [{
-                    data: [820, 932, 901, 934, 1290, 1330, 1320],
+                    data: [mydata2[0].confirm_add, mydata2[1].confirm_add, mydata2[2].confirm_add
+                    	, mydata2[3].confirm_add, mydata2[4].confirm_add
+                    	, mydata2[5].confirm_add, mydata2[6].confirm_add],
                     type: 'line'
                 }]
             };
@@ -118,13 +172,16 @@ window.onload=function(){
         option = {
         xAxis: {
             type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            data: [mydata2[0].date, mydata2[1].date, mydata2[2].date
+            	, mydata2[3].date, mydata2[4].date, mydata2[5].date, mydata2[6].date]
         },
         yAxis: {
             type: 'value'
         },
         series: [{
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            data: [mydata2[0].confirm, mydata2[1].confirm, mydata2[2].confirm
+            	, mydata2[3].confirm, mydata2[4].confirm
+            	, mydata2[5].confirm, mydata2[6].confirm],
             type: 'line'
         }]
     };
@@ -135,15 +192,29 @@ window.onload=function(){
             
             var myChart3 = echarts.init(document.getElementById('content3'));
             option = {
+            	legend: {
+            	    data: ['累计治愈', '累计死亡']
+            	},
                 xAxis: {
                     type: 'category',
-                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                    data: [mydata2[0].date, mydata2[1].date, mydata2[2].date
+                    	, mydata2[3].date, mydata2[4].date, mydata2[5].date, mydata2[6].date]
                 },
                 yAxis: {
                     type: 'value'
                 },
                 series: [{
-                    data: [820, 932, 901, 934, 1290, 1330, 1320],
+                	name: "累计治愈",
+                    data: [mydata2[0].heal, mydata2[1].heal, mydata2[2].heal
+                    	, mydata2[3].heal, mydata2[4].heal
+                    	, mydata2[5].heal, mydata2[6].heal],
+                    type: 'line'
+                },
+                {
+                	name: "累计死亡",
+                    data: [mydata2[0].dead, mydata2[1].dead, mydata2[2].dead
+                    	, mydata2[3].dead, mydata2[4].dead
+                    	, mydata2[5].dead, mydata2[6].dead],
                     type: 'line'
                 }]
             };
@@ -190,77 +261,84 @@ window.onload=function(){
 </script>
 <script>
 
-    var myChart = echarts.init(document.getElementById('main'));
-    //myChart.showLoading();
-    var province = "${province}";
-    //var list = "${list}";
+var title=document.createElement("a");
+title.text=decodeURI(getQueryVariable("name"));
 
+var myChart = echarts.init(document.getElementById('main'));
+//myChart.showLoading();
+var province = "${province}";
+//var list = "${list}";
 
-    $.get("mapjson/"+ province +".json", function (geoJson) {
+$.get("mapjson/" + title.text + ".json", function (geoJson) {
 
-        myChart.hideLoading();
+    myChart.hideLoading();
 
-        echarts.registerMap(province, geoJson);
+    echarts.registerMap(province, geoJson);
 
-        myChart.setOption(option = {
-            title: {
-                text: province + '地区疫情情况',
-            },
-            tooltip: {
-                trigger: 'item',
-                formatter: '{b}<br/>{c} (确诊 / 人)'
-            },
-            toolbox: {
-                show: true,
-                orient: 'vertical',
-                left: 'right',
-                top: 'center',
-                feature: {
-                    dataView: {readOnly: false},
-                    restore: {},
-                    saveAsImage: {}
+    myChart.setOption(option = {
+        title: {
+            text: title.text + '地区疫情情况',
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{b}<br/>{c} (确诊 / 人)'
+        },
+        toolbox: {
+            show: true,
+            orient: 'vertical',
+            left: 'right',
+            top: 'center',
+            feature: {
+                dataView: {readOnly: false},
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        visualMap: {
+            min: 0,
+            max: 100,
+            text: ['高', '低'],
+            inRange: {
+                color: ['#fff5ee', '#dd0515']
+            }
+        },
+        series: [
+            {
+                name: province + '地区疫情情况',
+                type: 'map',
+                mapType: province, // 自定义扩展图表类型
+                label: {
+                    show: true
                 }
-            },
-            visualMap: {
-                min: 0,
-                max: 50000,
-                text: ['High', 'Low'],
-                inRange: {
-                    color: ['lightskyblue', 'yellow', 'orangered']
-                }
-            },
-            series: [
-                {
-                    name: province + '地区疫情情况',
-                    type: 'map',
-                    mapType: province, // 自定义扩展图表类型
-                    label: {
-                        show: true
-                    }
-                }
-            ]
-        });
+            }
+        ]
     });
+});
+   
+   
 
-
-
-    $.ajax({
-        url:"info?method=d",
+	$.ajax({
+        url:"InfoServlet?method=crawl",
         async:true,
         type:"POST",
-        data:{"province":province},
+        data:{},
         success:function(data){
-            alert(data.length);
-            var mydata1 = new Array(0);
-            for(var i=0;i<data.length;i++){
-                var c = {};
-                c["name"] = data[i].name+'市';
-                c["value"] = data[i].value;
-                mydata1.push(c);
+        	var json = eval("(" + data + ")");//data为接收的后台返回的数据；
+            alert(json.length);
+            var mydata3 = new Array(0);
+            for (var i = 0; i < json.length; i++) {
+                if(json[i].provinceShortName == title.text){
+                	for (var j = 0; j < json[i].cities.length; j++) {
+                		var c = {};
+                        c["name"] = json[i].cities[j].cityName + '市';
+                        c["value"] = json[i].cities[j].currentConfirmedCount;
+                        mydata3.push(c);
+                	}
+                }
             }
             myChart.setOption({        //加载数据图表
                 series: [{
-                    data: mydata1
+                    data: mydata3
                 }]
             });
         },
@@ -269,6 +347,7 @@ window.onload=function(){
         },
         dataType:"json"
     });
+    
 
 
 

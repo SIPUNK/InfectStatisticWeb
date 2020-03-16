@@ -17,61 +17,59 @@ import com.alibaba.fastjson.JSONObject;
 public class ApiRequest {
 	
     public static String result(String info) {
-    	//½Ó¿ÚµØÖ·
+    	//æ¥å£åœ°å€
     	String requestUrl = "http://wuliang.art/ncov/statistics/getProvinceHistoryList";  
-    	//paramsÓÃÓÚ´æ´¢ÒªÇëÇóµÄ²ÎÊı
+    	//paramsç”¨äºå­˜å‚¨è¦è¯·æ±‚çš„å‚æ•°
         Map params = new HashMap();
-        //showapi_appidµÄÖµ£¬°Ñ###Ìæ»»³ÉÄãµÄappid
+        //showapi_appidçš„å€¼ï¼ŒæŠŠ###æ›¿æ¢æˆä½ çš„appid
         params.put("provinceName",info);
-        //µ÷ÓÃhttpRequest·½·¨£¬Õâ¸ö·½·¨Ö÷ÒªÓÃÓÚÇëÇóµØÖ·£¬²¢¼ÓÉÏÇëÇó²ÎÊı
+        //è°ƒç”¨httpRequestæ–¹æ³•ï¼Œè¿™ä¸ªæ–¹æ³•ä¸»è¦ç”¨äºè¯·æ±‚åœ°å€ï¼Œå¹¶åŠ ä¸Šè¯·æ±‚å‚æ•°
         String string = httpRequest(requestUrl,params);
-       // System.out.println(string);
-        //´¦Àí·µ»ØµÄJSONÊı¾İ²¢·µ»Ø
-
+        //System.out.println(string);
+        //å¤„ç†è¿”å›çš„JSONæ•°æ®å¹¶è¿”å›
         JSONObject pageBean = JSONObject.parseObject(string);
-       // System.out.println(pageBean);
     	return pageBean.getString("data");
     }
     
     private static String httpRequest(String requestUrl,Map params) {  
-    	//bufferÓÃÓÚ½ÓÊÜ·µ»ØµÄ×Ö·û
+    	//bufferç”¨äºæ¥å—è¿”å›çš„å­—ç¬¦
     	StringBuffer buffer = new StringBuffer();
         try {  
-        	//½¨Á¢URL£¬°ÑÇëÇóµØÖ·¸ø²¹È«£¬ÆäÖĞurlencode£¨£©·½·¨ÓÃÓÚ°ÑparamsÀïµÄ²ÎÊı¸øÈ¡³öÀ´
+        	//å»ºç«‹URLï¼ŒæŠŠè¯·æ±‚åœ°å€ç»™è¡¥å…¨ï¼Œå…¶ä¸­urlencodeï¼ˆï¼‰æ–¹æ³•ç”¨äºæŠŠparamsé‡Œçš„å‚æ•°ç»™å–å‡ºæ¥
             URL url = new URL(requestUrl+"?"+urlencode(params));  
-            //´ò¿ªhttpÁ¬½Ó
+            //æ‰“å¼€httpè¿æ¥
             HttpURLConnection httpUrlConn = (HttpURLConnection) url.openConnection();  
             httpUrlConn.setDoInput(true);  
             httpUrlConn.setRequestMethod("GET");  
             httpUrlConn.connect();  
             
-            //»ñµÃÊäÈë
+            //è·å¾—è¾“å…¥
             InputStream inputStream = httpUrlConn.getInputStream();  
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "utf-8");  
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);  
   
-            //½«bufferReaderµÄÖµ¸ø·Åµ½bufferÀï
+            //å°†bufferReaderçš„å€¼ç»™æ”¾åˆ°bufferé‡Œ
             String str = null;  
             while ((str = bufferedReader.readLine()) != null) {  
                 buffer.append(str);  
             }  
-            //¹Ø±ÕbufferReaderºÍÊäÈëÁ÷
+            //å…³é—­bufferReaderå’Œè¾“å…¥æµ
             bufferedReader.close();  
             inputStreamReader.close();  
             inputStream.close();  
             inputStream = null;  
-            //¶Ï¿ªÁ¬½Ó
+            //æ–­å¼€è¿æ¥
             httpUrlConn.disconnect();
             
         } catch (Exception e) {  
             e.printStackTrace();  
         }  
-        	//·µ»Ø×Ö·û´®
+        	//è¿”å›å­—ç¬¦ä¸²
         return buffer.toString();  
     }  
     
     public static String urlencode(Map<String,Object>data) {
-    	//½«mapÀïµÄ²ÎÊı±ä³ÉÏñ showapi_appid=###&showapi_sign=###&µÄÑù×Ó
+    	//å°†mapé‡Œçš„å‚æ•°å˜æˆåƒ showapi_appid=###&showapi_sign=###&çš„æ ·å­
         StringBuilder sb = new StringBuilder();
         for (Map.Entry i : data.entrySet()) {
             try {
@@ -82,10 +80,10 @@ public class ApiRequest {
         }
         return sb.toString();
     }
-    //²âÊÔÊÇ·ñÓĞĞ§
+    //æµ‹è¯•æ˜¯å¦æœ‰æ•ˆ
 	public static void main(String[] args) {
 	
-		System.out.println(result("ºş±±"));
+		System.out.println(result("æ¹–åŒ—"));
 	}
  
 }

@@ -55,17 +55,6 @@
     </div>
 </div>
 
-<div class="countryContent">
-    <h2>全国确诊人数趋势</h2>
-    <div class="country-content" id="country-content1" style="height: 500px;width: 800px">
-    </div>
-    <h2>全国治愈人数趋势</h2>
-    <div class="country-content" id="country-content2" style="height: 500px;width: 800px">
-    </div>
-    <h2>全国死亡人数趋势</h2>
-    <div class="country-content" id="country-content3" style="height: 500px;width: 800px">
-    </div>
-</div>
 
 <script type="text/javascript">
     var dataList=[
@@ -106,7 +95,9 @@
         {name: '澳门', value: 10}
     ]
     var myChart = echarts.init(document.getElementById('content2'));
-
+    function randomValue() {
+        return Math.round(Math.random()*1000);
+    }
 
 
     option = {
@@ -122,7 +113,7 @@
             top: 'bottom',
             text: ['高','低'],//取值范围的文字
             inRange: {
-                color: ['#fff5ee', '#fd0000']//取值范围的颜色
+                color: ['#fff5ee', '#dd0515']//取值范围的颜色
             },
             show:true//图注
         },
@@ -335,78 +326,6 @@ window.onload=function () {
             dataType : "json"
         });
     }
-$.ajax({
-    url : "InfoServlet?method=crawl2",
-    async : true,
-    type : "POST",
-    data : {
-
-    },
-    success : function(data){
-        var json = eval("(" + data + ")");//data为接收的后台返回的数据；
-        //alert(json.length);
-        mydata2 = [];
-        for (var i = 0; i < json.length; i++) {
-            console.log(json[i]);
-        }
-
-        var myChart1 = echarts.init(document.getElementById('country-content1'));
-        option = {
-            xAxis: {
-                type: 'category',
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-            },
-            yAxis: {
-                type: 'value'
-            },
-            series: [{
-                data: [820, 932, 901, 934, 1290, 1330, 1320],
-                type: 'line'
-            }]
-        };
-        myChart1.setOption(option);
-
-        var myChart2 = echarts.init(document.getElementById('country-content2'));
-        option = {
-            xAxis: {
-                type: 'category',
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-            },
-            yAxis: {
-                type: 'value'
-            },
-            series: [{
-                data: [820, 932, 901, 934, 1290, 1330, 1320],
-                type: 'line'
-            }]
-        };
-        myChart2.setOption(option);
-
-
-
-
-        var myChart3 = echarts.init(document.getElementById('country-content3'));
-        option = {
-            xAxis: {
-                type: 'category',
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-            },
-            yAxis: {
-                type: 'value'
-            },
-            series: [{
-                data: [820, 932, 901, 934, 1290, 1330, 1320],
-                type: 'line'
-            }]
-        };
-        myChart3.setOption(option);
-    },
-    error : function() {
-        alert("请求失败");
-    },
-});
-}
-
 </script>
 </body>
 </html>
